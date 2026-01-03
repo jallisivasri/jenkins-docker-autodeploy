@@ -20,14 +20,15 @@ pipeline {
             }
         }
 
-        stage('Run Container') {
-            steps {
-                sh '''
-                  docker stop auto-app || true
-                  docker rm auto-app || true
-                  docker run -d --name auto-app -p 3000:3000 $IMAGE_NAME
-                '''
-            }
-        }
+        stage('Run App') {
+    steps {
+        sh '''
+          docker stop auto-app || true
+          docker rm auto-app || true
+          docker run -d --restart always --name auto-app -p 3000:3000 jallisivasri703/jenkins-autodeploy
+        '''
+    }
+}
+
     }
 }
